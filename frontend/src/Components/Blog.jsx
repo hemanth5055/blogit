@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { HiOutlineMenuAlt4 } from "react-icons/hi";
+
 import Loading from "./Loading";
+import Navbar from "./Navbar";
 
 export default function Blog() {
   const [content, setContent] = useState("");
@@ -16,15 +17,7 @@ export default function Blog() {
   return (
     <div className="relative w-full h-full bg-black rounded-2xl flex flex-col gap-[15px] pt-4">
       {/* <Loading /> */}
-      <div className="w-full flex justify-between px-5">
-        <h2 className="font-mont text-white font-semibold text-[20px]">
-          Blogit.
-        </h2>
-        <div className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer">
-          <HiOutlineMenuAlt4 className="text-white" size={20} />
-        </div>
-      </div>
-
+      <Navbar></Navbar>
       <div className="w-full flex flex-col items-center gap-[10px]">
         <h4 className="font-mont max-sm:font-medium text-white text-[13px] max-sm:text-[10px]">
           May 29 , 2025
@@ -41,7 +34,7 @@ export default function Blog() {
       </div>
 
       <div
-        className="text-gray-100  pt-[20px] w-full px-5 font-mont leading-7 max-sm:text-[15px]"
+        className="text-gray-100 text-[15px] pt-[20px] w-full px-5 font-mont leading-7"
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </div>

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Loading from "./Loading";
+import { useContext } from "react";
+import { UserContext } from "../Context/Usercontext";
+import Navbar from "./Navbar";
 
 export default function Verifyemail() {
   const [code, setCode] = useState("");
+  const { loading, Verify } = useContext(UserContext);
   return (
-    <div className="relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
-      {/* <Loading></Loading> */}
+      <><Navbar></Navbar><div className="relative w-full h-full flex b flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
+      {loading ? <Loading></Loading> : ""}
       <div className="flex flex-col items-center">
         <h1 className="text-white font-play text-[45px] max-sm:text-[40px] font-extralight">
           Verify Your Email !
@@ -22,14 +26,16 @@ export default function Verifyemail() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             type="text"
-            className="outline-none bg-[#212121] h-[40px] w-[300px] rounded-[10px] text-white font-mont pl-2 text-[13px]"
-          />
+            className="outline-none bg-[#212121] h-[40px] w-[300px] rounded-[10px] text-white font-mont pl-2 text-[13px]" />
         </div>
       </div>
 
       <div className="flex flex-col items-center gap-[20px]">
-        <div className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer">
-          verify
+        <div
+          onClick={(e) => Verify(code)}
+          className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer"
+        >
+          Verify
         </div>
         <h2 className="text-[12px] font-mont text-white font-medium">
           Didn't get the mail ?{" "}
@@ -38,6 +44,6 @@ export default function Verifyemail() {
           </span>{" "}
         </h2>
       </div>
-    </div>
+    </div></>
   );
 }

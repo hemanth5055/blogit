@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { HiOutlineMenuAlt4 } from "react-icons/hi";
+
 
 import JoditEditor from "jodit-react";
 import Loading from "./Loading";
+import Navbar from "./Navbar";
 
 export default function Create() {
   const editor = useRef(null);
@@ -27,14 +28,7 @@ export default function Create() {
   return (
     <div className="w-full h-full p-2 flex flex-col gap-[10px]">
       {/* <Loading></Loading> */}
-      <div className="w-full flex justify-between px-5">
-        <h2 className="font-mont text-white font-semibold text-[20px]">
-          Blogit.
-        </h2>
-        <div className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer">
-          <HiOutlineMenuAlt4 className="text-white" size={20} />
-        </div>
-      </div>
+      <Navbar></Navbar>
       <div className="w-full flex flex-col gap-[15px] px-5 items-center">
         <input
           type="text"

@@ -10,8 +10,9 @@ const app = express();
 
 app.use(
   cors({
-    uri: "*",
-    withCredentials: true,
+    origin: `${process.env.FRONTEND}`,
+    methods: ["GET", "POST"],
+    credentials: true,
   })
 );
 app.use(express.json()); //to allow json data in requests

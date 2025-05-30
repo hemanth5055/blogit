@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Loading from "./Loading";
+import { UserContext } from "../Context/Usercontext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { Login, loading } = useContext(UserContext);
+  const navigate = useNavigate();
   return (
     <>
       <div className="relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
-        {/* <Loading></Loading> */}
+        {loading ? <Loading></Loading> : ""}
         <div className="flex flex-col items-center">
           <h1 className="text-white font-play text-[45px] font-extralight">
             Welcome Back !
@@ -44,12 +48,18 @@ export default function Login() {
         </div>
 
         <div className="flex flex-col items-center gap-[20px]">
-          <div className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer">
+          <div
+            onClick={() => Login(email, password)}
+            className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer"
+          >
             Login
           </div>
           <h2 className="text-[12px] font-mont text-white font-medium">
             Not a Member ?{" "}
-            <span className="text-[#FDE36D] font-medium cursor-pointer">
+            <span
+              className="text-[#FDE36D] font-medium cursor-pointer"
+              onClick={() => navigate("/signup")}
+            >
               Create an account.
             </span>{" "}
           </h2>

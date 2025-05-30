@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Loading from "./Loading";
+import { UserContext } from "../Context/Usercontext";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const { loading, Signup } = useContext(UserContext);
+  // if (loading) {
+  //   return <Loading></Loading>;
+  // }
   return (
-    <div className=" relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
-      {/* <Loading></Loading> */}
+    <div className="relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
+      {loading ? <Loading></Loading> : ""}
       <div className="flex flex-col items-center">
         <h1 className="text-white font-play text-[45px] font-extralight">
           Welcome Dev !
@@ -53,14 +58,17 @@ export default function Signup() {
       </div>
 
       <div className="flex flex-col items-center gap-[20px]">
-        <div className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer">
+        <div
+          onClick={() => Signup(name, email, password)}
+          className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer"
+        >
           Signup
         </div>
         <h2 className="text-[12px] font-mont text-white font-medium">
-          Already a member ?{" "}
+          Already a member?{" "}
           <span className="text-[#FDE36D] font-medium cursor-pointer">
             login here.
-          </span>{" "}
+          </span>
         </h2>
       </div>
     </div>
