@@ -10,7 +10,7 @@ export default function Verifyemail() {
   return (
       <><Navbar></Navbar><div className="relative w-full h-full flex b flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
       {loading ? <Loading></Loading> : ""}
-      <div className="flex flex-col items-center">
+      <div className="mt-[150px] flex flex-col items-center">
         <h1 className="text-white font-play text-[45px] max-sm:text-[40px] font-extralight">
           Verify Your Email !
         </h1>

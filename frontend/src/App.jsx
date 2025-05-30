@@ -11,7 +11,7 @@ import Dashboard from "./Components/Dashboard";
 export default function App() {
   const { ToastContainer } = useContext(UserContext);
   return (
-    <div className="w-full h-screen bg-black p-2 relative">
+    <div className="w-full min-h-screen bg-black p-2 relative">
       <ToastContainer
         position="top-right"
         autoClose={5000}

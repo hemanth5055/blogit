@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { connecttoDB } from "./Utils/connectDB.js";
 import { authRouter } from "./Routes/auth.route.js";
+import { blogRouter } from "./Routes/blog.route.js";
 dotenv.config();
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json()); //to allow json data in requests
 app.use(cookieParser()); // to allow cookies
 
 app.use("/auth", authRouter);
+app.use("/blog", blogRouter);
 app.get("/check", (req, res) => {
   return res.send("Server Working ");
 });

@@ -12,7 +12,7 @@ export default function Login() {
     <>
       <div className="relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
         {loading ? <Loading></Loading> : ""}
-        <div className="flex flex-col items-center">
+        <div className="mt-[150px]  flex flex-col items-center ">
           <h1 className="text-white font-play text-[45px] font-extralight">
             Welcome Back !
           </h1>
