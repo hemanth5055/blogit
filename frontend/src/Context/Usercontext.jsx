@@ -21,7 +21,6 @@ export const ContextProvider = ({ children }) => {
     }
   }, [user]);
 
-
   const Signup = async (name, email, password) => {
     setLoading(true);
     try {
@@ -94,11 +93,12 @@ export const ContextProvider = ({ children }) => {
       if (!result) {
         throw new Error("Backend Error");
       }
-
+      console.log(result);
       if (result.data.success) {
         setUser(result.data.user);
         if (result.data.user.isVerified) {
           navigate("/");
+          setVerified(true);
         } else {
           navigate("/verify");
         }

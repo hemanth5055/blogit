@@ -17,7 +17,7 @@ export const BlogProvider = ({ children }) => {
 
   useEffect(() => {
     if (!user || loading) return;
-    if (!verified && location.pathname !== "/verify") {
+    if (!user.isVerified && location.pathname !== "/verify") {
       navigate("/verify");
     }
   }, [user, verified, loading, location.pathname]);

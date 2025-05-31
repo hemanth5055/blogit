@@ -42,7 +42,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
-              className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[300px] rounded-[10px] dark:ext-white font-mont pl-2 text-[13px]"
+              className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[300px] rounded-[10px] dark:text-white font-mont pl-2 text-[13px]"
             />
           </div>
         </div>

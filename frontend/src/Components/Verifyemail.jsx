@@ -13,7 +13,7 @@ export default function Verifyemail() {
       <div className="relative w-full h-full flex b flex-col justify-center items-center dark:bg-black rounded-2xl gap-[40px]">
         {loading ? <Loading></Loading> : ""}
         <div className="mt-[150px] flex flex-col items-center">
-          <h1 className="text-blacktext-white font-play text-[45px] max-sm:text-[40px] font-extralight">
+          <h1 className="text-black dark:text-white font-play text-[45px] max-sm:text-[40px] font-extralight">
             Verify Your Email !
           </h1>
           <h4 className="font-mont dark:text-white text-[11px]">
