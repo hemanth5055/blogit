@@ -29,7 +29,7 @@ export default function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
         <Route path="/verify" element={<Verifyemail></Verifyemail>}></Route>
-        <Route path="/blog" element={<Blog></Blog>}></Route>
+        <Route path="/blog/:blogId" element={<Blog></Blog>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path="/" element={<Dashboard></Dashboard>}></Route>
       </Routes>

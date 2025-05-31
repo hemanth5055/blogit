@@ -92,6 +92,7 @@ export const ContextProvider = ({ children }) => {
       }
 
       if (result.data.success) {
+        setUser(result.data.user);
         navigate("/");
       } else {
         toast(result.data.message || "Login failed");
@@ -109,7 +110,6 @@ export const ContextProvider = ({ children }) => {
       if (!result) {
         throw new Error("Backend Error");
       }
-
       const user = result.data.user;
       setUser(user);
       if (result.data.success) {
@@ -150,7 +150,18 @@ export const ContextProvider = ({ children }) => {
   };
   return (
     <UserContext.Provider
-      value={{ loading, user, ToastContainer, Signup, Verify, Login, Logout }}
+      value={{
+        loading,
+        user,
+        toast,
+        backend,
+        setLoading,
+        ToastContainer,
+        Signup,
+        Verify,
+        Login,
+        Logout,
+      }}
     >
       {children}
     </UserContext.Provider>

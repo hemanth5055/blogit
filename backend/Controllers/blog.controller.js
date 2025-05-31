@@ -27,7 +27,6 @@ export async function add(req, res) {
 
     const result = await post.save();
     console.log(result);
-
     return res.status(200).json({ success: true, blog: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
@@ -63,6 +62,18 @@ export async function userBlogs(req, res) {
     const result = await Blog.find({ createdId: id }).sort({ createdAt: 1 });
 
     return res.status(200).json({ success: true, blogs: result });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+}
+export async function reqBlog(req, res) {
+  const { id } = req.body;
+  try {
+    if (!id) {
+      throw new Error("All fields are required");
+    }
+    const result = await Blog.findById(id);
+    return res.status(200).json({ success: true, blog: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
   }
