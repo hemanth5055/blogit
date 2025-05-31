@@ -18,7 +18,7 @@ app.use(
 );
 app.use(express.json()); //to allow json data in requests
 app.use(cookieParser()); // to allow cookies
-
+connecttoDB();
 app.use("/auth", authRouter);
 app.use("/blog", blogRouter);
 app.get("/", (req, res) => {
@@ -26,6 +26,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  connecttoDB();
-  console.log("Server Started at port 8000");
+  console.log(`Server Started at port ${process.env.PORT}`);
 });
