@@ -9,7 +9,7 @@ import { UserContext } from "../Context/Usercontext";
 
 export default function Blog() {
   const [content, setContent] = useState(null);
-  const { loading } = useContext(UserContext);
+  const { loading, user, verified } = useContext(UserContext);
   const { getspecificBlog } = useContext(BlogContext);
   const { blogId } = useParams();
 
@@ -20,6 +20,8 @@ export default function Blog() {
   useEffect(() => {
     getspecificBlog(blogId, setContent);
   }, []);
+
+  
   if (loading) {
     return <Loading></Loading>;
   }

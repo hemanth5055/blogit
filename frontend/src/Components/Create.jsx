@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import Navbar from "./Navbar";
 import { BlogContext } from "../Context/Blogcontext";
 import { UserContext } from "../Context/Usercontext";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const editor = useRef(null);
@@ -12,7 +13,8 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const { sendBlog } = useContext(BlogContext);
-  const { user, loading } = useContext(UserContext);
+  const { user, loading, verified } = useContext(UserContext);
+  const navigate = useNavigate();
   const config = useMemo(
     () => ({
       readonly: false,
@@ -33,13 +35,12 @@ export default function Create() {
     const todayDate = getFormattedDate();
     sendBlog(title, desc, content, user.name, user._id, todayDate);
   };
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
+
 
   if (loading) {
     return <Loading></Loading>;
   }
+
   return (
     <div className="w-full h-full p-2 flex flex-col gap-[10px]">
       <Navbar></Navbar>

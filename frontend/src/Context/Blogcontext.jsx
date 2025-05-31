@@ -9,10 +9,18 @@ import { useNavigate } from "react-router-dom";
 export const BlogContext = createContext();
 
 export const BlogProvider = ({ children }) => {
-  const { user, loading, toast, backend, setLoading } = useContext(UserContext);
+  const { user, loading, toast, backend, setLoading, verified, location } =
+    useContext(UserContext);
   const [blogs, setBlogs] = useState(null);
   const [myblogs, setmyBlogs] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || loading) return;
+    if (!verified && location.pathname !== "/verify") {
+      navigate("/verify");
+    }
+  }, [user, verified, loading, location.pathname]);
 
   const getBlogs = async (id, count) => {
     setLoading(true);

@@ -12,6 +12,7 @@ export const ContextProvider = ({ children }) => {
   const backend = import.meta.env.VITE_BACKEND;
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [verified, setVerified] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,6 +20,8 @@ export const ContextProvider = ({ children }) => {
       CheckAuth();
     }
   }, [user]);
+
+
   const Signup = async (name, email, password) => {
     setLoading(true);
     try {
@@ -65,6 +68,7 @@ export const ContextProvider = ({ children }) => {
 
       if (result.data.success) {
         setUser(result.data.user);
+        setVerified(true);
         navigate("/");
       } else {
         toast(result.data.message || "Verification failed");
@@ -93,7 +97,11 @@ export const ContextProvider = ({ children }) => {
 
       if (result.data.success) {
         setUser(result.data.user);
-        navigate("/");
+        if (result.data.user.isVerified) {
+          navigate("/");
+        } else {
+          navigate("/verify");
+        }
       } else {
         toast(result.data.message || "Login failed");
       }
@@ -116,6 +124,7 @@ export const ContextProvider = ({ children }) => {
         if (!user.isVerified && location.pathname !== "/verify") {
           navigate("/verify");
         } else if (user.isVerified && location.pathname === "/verify") {
+          setVerified(true);
           navigate("/");
         }
       } else {
@@ -154,6 +163,7 @@ export const ContextProvider = ({ children }) => {
         loading,
         user,
         toast,
+        verified,
         backend,
         location,
         setLoading,
