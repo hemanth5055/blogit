@@ -21,7 +21,7 @@ app.use(cookieParser()); // to allow cookies
 
 app.use("/auth", authRouter);
 app.use("/blog", blogRouter);
-app.get("/check", (req, res) => {
+app.get("/", (req, res) => {
   return res.send("Server Working ");
 });
 

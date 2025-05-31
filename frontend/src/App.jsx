@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
-import Verifyemail from "./Components/Verifyemail";
+// import Verifyemail from "./Components/Verifyemail";
 import Blog from "./Components/Blog";
 import Create from "./Components/Create";
 import { UserContext } from "./Context/Usercontext";
