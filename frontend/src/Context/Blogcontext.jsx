@@ -28,7 +28,11 @@ export const BlogProvider = ({ children }) => {
       if (!id || !count) {
         throw new Error("Missind Id and Count");
       }
-      const result = await axios.post(`${backend}/blog/all`, { id, count });
+      const result = await axios.post(
+        `${backend}/blog/all`,
+        { id, count },
+        { withCredentials: true }
+      );
       setBlogs(result.data.blogs);
       console.log(result);
     } catch (error) {
@@ -44,9 +48,13 @@ export const BlogProvider = ({ children }) => {
       if (!id) {
         throw new Error("Missing Id");
       }
-      const result = await axios.post(`${backend}/blog/userSpecific`, {
-        id,
-      });
+      const result = await axios.post(
+        `${backend}/blog/userSpecific`,
+        {
+          id,
+        },
+        { withCredentials: true }
+      );
       setmyBlogs(result.data.blogs);
       console.log(result);
     } catch (error) {
@@ -62,9 +70,13 @@ export const BlogProvider = ({ children }) => {
       if (!id) {
         throw new Error("Missing Id");
       }
-      const result = await axios.post(`${backend}/blog/blogSpecific`, {
-        id,
-      });
+      const result = await axios.post(
+        `${backend}/blog/blogSpecific`,
+        {
+          id,
+        },
+        { withCredentials: true }
+      );
       console.log(result);
       if (result.data.success) {
         setterFn(result.data.blog);
@@ -101,14 +113,18 @@ export const BlogProvider = ({ children }) => {
       ) {
         throw new Error("All fields are required.");
       }
-      const result = await axios.post(`${backend}/blog/add`, {
-        title,
-        description,
-        content,
-        createdId,
-        createdName,
-        dateString,
-      });
+      const result = await axios.post(
+        `${backend}/blog/add`,
+        {
+          title,
+          description,
+          content,
+          createdId,
+          createdName,
+          dateString,
+        },
+        { withCredentials: true }
+      );
       console.log(result);
       if (result.data.success) {
         navigate(`/blog/${result.data.blog._id}`);

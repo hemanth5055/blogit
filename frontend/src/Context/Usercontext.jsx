@@ -27,11 +27,15 @@ export const ContextProvider = ({ children }) => {
       if (!name || !email || !password) {
         throw new Error("All fields are required");
       }
-      const result = await axios.post(`${backend}/auth/signup`, {
-        name,
-        email,
-        password,
-      });
+      const result = await axios.post(
+        `${backend}/auth/signup`,
+        {
+          name,
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       console.log(result);
       if (!result) {
@@ -86,10 +90,14 @@ export const ContextProvider = ({ children }) => {
       }
 
       // Send request to backend
-      const { data } = await axios.post(`${backend}/auth/login`, {
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${backend}/auth/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       if (!data) {
         throw new Error("No response from backend");
@@ -117,7 +125,9 @@ export const ContextProvider = ({ children }) => {
   const CheckAuth = async () => {
     setLoading(true);
     try {
-      const result = await axios.get(`${backend}/auth/check-auth`);
+      const result = await axios.get(`${backend}/auth/check-auth`, {
+        withCredentials: true,
+      });
       if (!result) {
         throw new Error("Backend Error");
       }
@@ -143,7 +153,9 @@ export const ContextProvider = ({ children }) => {
   const Logout = async () => {
     setLoading(true);
     try {
-      const result = await axios.post(`${backend}/auth/logout`);
+      const result = await axios.post(`${backend}/auth/logout`, {
+        withCredentials: true,
+      });
       if (!result) {
         throw new Error("Backend Error");
       }
