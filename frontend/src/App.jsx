@@ -7,11 +7,13 @@ import Blog from "./Components/Blog";
 import Create from "./Components/Create";
 import { UserContext } from "./Context/Usercontext";
 import Dashboard from "./Components/Dashboard";
+import Myblogs from "./Components/Myblogs";
+import Notfound from "./Components/Notfound";
 
 export default function App() {
   const { ToastContainer } = useContext(UserContext);
   return (
-    <div className="w-full min-h-screen bg-black p-2 relative">
+    <div className="w-full min-h-screen dark:bg-black p-2 relative max-sm:px-1">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -29,9 +31,11 @@ export default function App() {
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup></Signup>}></Route>
         <Route path="/verify" element={<Verifyemail></Verifyemail>}></Route>
+        <Route path="/myblogs" element={<Myblogs></Myblogs>}></Route>
         <Route path="/blog/:blogId" element={<Blog></Blog>}></Route>
         <Route path="/create" element={<Create></Create>}></Route>
         <Route path="/" element={<Dashboard></Dashboard>}></Route>
+        <Route path="*" element={<Notfound></Notfound>}></Route>
       </Routes>
     </div>
   );

@@ -50,14 +50,14 @@ export default function Create() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="w-[100%] max-sm:w-[100%] font-medium bg-[#F9F9F9] h-[50px] rounded-[5px] outline-none text-[20px] font-mont pl-2"
+            className="w-[100%] max-sm:w-[100%] font-medium dark:bg-[#F9F9F9] bg-[rgb(239,238,238)] h-[50px] rounded-[5px] outline-none text-[17px] font-mont pl-2"
           />
           <textarea
             type="text"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             placeholder="Small Description"
-            className="w-[100%] resize-none max-sm:w-[100%] font-medium bg-[#F9F9F9] h-[100px] rounded-[5px] outline-none text-[15px] font-mont p-2"
+            className="w-[100%] resize-none max-sm:w-[100%] font-medium dark:bg-[#F9F9F9] bg-[rgb(239,238,238)] h-[100px] rounded-[5px] outline-none text-[15px] font-mont p-2"
           ></textarea>
           <div
             className="bg-[#FDE36D] text-black font-mont py-2 h-[50px] flex justify-center items-center rounded-[10px] text-[13px] font-semibold cursor-pointer"

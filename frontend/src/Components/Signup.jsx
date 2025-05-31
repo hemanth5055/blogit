@@ -11,48 +11,50 @@ export default function Signup() {
   //   return <Loading></Loading>;
   // }
   return (
-    <div className="relative w-full h-full flex flex-col justify-center items-center bg-black rounded-2xl gap-[40px]">
+    <div className="relative w-full h-full flex flex-col justify-center items-center dark:bg-black rounded-2xl gap-[40px]">
       {loading ? <Loading></Loading> : ""}
       <div className="mt-[100px] flex flex-col items-center">
-        <h1 className="text-white font-play text-[45px] font-extralight">
+        <h1 className="dark:text-white font-play text-[45px] font-extralight text-black">
           Welcome Dev !
         </h1>
-        <h4 className="font-mont text-white text-[11px]">
+        <h4 className="font-mont dark:text-white text-[11px] text-black">
           Enter your information to create your account.
         </h4>
       </div>
 
       <div className="flex flex-col gap-[15px]">
         <div className="name box flex flex-col gap-1">
-          <h4 className="font-mont font-medium text-[10px] text-white">Name</h4>
+          <h4 className="font-mont font-medium text-[10px] dark:text-white text-black">
+            Name
+          </h4>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             type="text"
-            className="outline-none bg-[#212121] h-[40px] w-[300px] rounded-[10px] text-white font-mont pl-2 text-[13px]"
+            className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[300px] rounded-[10px] dark:text-white font-mont pl-2 text-[13px]"
           />
         </div>
         <div className="password box flex flex-col gap-1">
-          <h4 className="font-mont font-medium text-[10px] text-white">
+          <h4 className="font-mont font-medium text-[10px] dark:text-white text-black">
             Email
           </h4>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="text"
-            className="outline-none bg-[#212121] h-[40px] w-[300px] rounded-[10px] text-white font-mont pl-2 text-[13px]"
+            className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[300px] rounded-[10px] dark:text-white font-mont pl-2 text-[13px]"
           />
         </div>
 
         <div className="email box flex flex-col gap-1">
-          <h4 className="font-mont font-medium text-[10px] text-white">
+          <h4 className="font-mont font-medium text-[10px] dark:text-white text-black">
             Password
           </h4>
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
-            className="outline-none bg-[#212121] h-[40px] w-[300px] rounded-[10px] text-white font-mont pl-2 text-[13px]"
+            className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[300px] rounded-[10px] dark:text-white font-mont pl-2 text-[13px]"
           />
         </div>
       </div>
@@ -64,9 +66,9 @@ export default function Signup() {
         >
           Signup
         </div>
-        <h2 className="text-[12px] font-mont text-white font-medium">
+        <h2 className="text-[12px] font-mont text-black dark:text-white font-medium">
           Already a member?{" "}
-          <span className="text-[#FDE36D] font-medium cursor-pointer">
+          <span className="dark:text-[#FDE36D] text-[#eece42]  font-medium cursor-pointer">
             login here.
           </span>
         </h2>

@@ -155,6 +155,7 @@ export const ContextProvider = ({ children }) => {
         user,
         toast,
         backend,
+        location,
         setLoading,
         ToastContainer,
         Signup,

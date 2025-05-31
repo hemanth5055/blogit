@@ -33,12 +33,11 @@ export const BlogProvider = ({ children }) => {
   const getmyBlogs = async (id) => {
     setLoading(true);
     try {
-      if (!id || !count) {
-        throw new Error("Missind Id and Count");
+      if (!id) {
+        throw new Error("Missing Id");
       }
       const result = await axios.post(`${backend}/blog/userSpecific`, {
         id,
-        count,
       });
       setmyBlogs(result.data.blogs);
       console.log(result);

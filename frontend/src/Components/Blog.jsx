@@ -25,25 +25,25 @@ export default function Blog() {
   }
 
   return (
-    <div className="relative w-full h-full bg-black rounded-2xl flex flex-col gap-[15px] pt-4">
+    <div className="relative w-full h-full dark:bg-black rounded-2xl flex flex-col gap-[15px] pt-4">
       <Navbar></Navbar>
       <div className="w-full flex flex-col items-center gap-[10px]">
-        <h4 className="font-mont max-sm:font-medium text-white text-[13px] max-sm:text-[10px]">
+        <h4 className="font-mont max-sm:font-medium dark:text-white text-[13px] max-sm:text-[10px]">
           {content?.dateString}
         </h4>
-        <h1 className="text-center font-play font-extralight text-white text-[40px] max-sm:text-[25px]">
-          {content ? content.title : 'Blog not found'}
+        <h1 className="text-center font-play font-extralight dark:text-white text-[40px] max-sm:text-[25px]">
+          {content ? content.title : "Blog not found"}
         </h1>
         <div className="flex gap-[10px] items-center">
           <div className="w-[30px] h-[30px] bg-gray-600 rounded-full"></div>
-          <h1 className="text-white max-sm:font-medium font-mont text-[13px] max-sm:text-[10px]">
+          <h1 className="dark:text-white max-sm:font-medium font-mont text-[13px] max-sm:text-[10px]">
             {content?.createdName}
           </h1>
         </div>
       </div>
 
       <div
-        className="text-gray-100 text-[15px] pt-[20px] w-full px-5 font-mont leading-7 mb-5"
+        className="dark:text-gray-100 text-[15px] pt-[20px] w-full px-5 font-mont leading-7 mb-5"
         dangerouslySetInnerHTML={{ __html: content?.content }}
       />
     </div>

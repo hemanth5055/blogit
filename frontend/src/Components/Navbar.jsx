@@ -9,30 +9,47 @@ import { MdOutlineLibraryBooks } from "react-icons/md";
 
 export default function Navbar() {
   const [isOpen, setisOpen] = useState(false);
-  const { Logout } = useContext(UserContext);
+  const { Logout, location, user } = useContext(UserContext);
   const navigate = useNavigate();
   return (
     <>
       <div className="w-full flex justify-between px-5">
         <h2
-          className="font-mont text-white font-semibold text-[20px] cursor-pointer"
+          className="font-mont text-black dark:text-white font-semibold text-[20px] cursor-pointer"
           onClick={() => navigate("/")}
         >
           Blogit.
         </h2>
-        <div
-          className="w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
-          onClick={() => setisOpen((prev) => !prev)}
-        >
-          {isOpen ? (
-            <IoClose size={20} className="text-white" />
+
+        <div className="flex gap-2 items-center">
+          {location.pathname === "/create" ? (
+            ""
           ) : (
-            <HiOutlineMenuAlt4 className="text-white" size={20} />
+            <div
+              className="font-mont text-black dark:text-white text-[15px] cursor-pointer dark:border-amber-50 border-black border dark:bg-[#161515] px-2 py-1 rounded-2xl max-sm:text-[13px]"
+              onClick={() => navigate("/create")}
+            >
+              Create
+            </div>
           )}
+
+          <div
+            className="w-[40px] h-[40px]  flex justify-center items-center cursor-pointer"
+            onClick={() => setisOpen((prev) => !prev)}
+          >
+            {isOpen ? (
+              <IoClose size={20} className="dark:text-white text-black" />
+            ) : (
+              <HiOutlineMenuAlt4
+                className="dark:text-white text-black"
+                size={20}
+              />
+            )}
+          </div>
         </div>
       </div>
       {isOpen ? (
-        <div className="absolute flex bg-[#FDE36D] flex-col  items-center  right-0 top-[40%] rounded-l-2xl gap-2">
+        <div className="absolute flex bg-[#FDE36D] flex-col  items-center  right-0 top-[40%] rounded-l-2xl gap-2 z-20">
           <div
             className="profile h-[33px] w-[33px] cursor-pointer  flex justify-center items-center"
             title="Profile"
@@ -42,6 +59,7 @@ export default function Navbar() {
           <div
             className="myblogs h-[33px] w-[33px] cursor-pointer flex justify-center items-center"
             title="My Blogs"
+            onClick={() => navigate("/myblogs")}
           >
             <MdOutlineLibraryBooks className="text-black"></MdOutlineLibraryBooks>
           </div>
