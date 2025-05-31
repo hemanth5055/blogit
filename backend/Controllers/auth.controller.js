@@ -28,8 +28,8 @@ export async function signup(req, res) {
 
     //verificationToken,
     // verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, //24 Hours in ms
-      // const validEmail = await sendVerificationEmail(email, verificationToken);
-      await user.save();
+    // const validEmail = await sendVerificationEmail(email, verificationToken);
+    await user.save();
     return res.status(201).json({
       success: true,
       message: "User created successfully",
@@ -111,7 +111,11 @@ export async function login(req, res) {
   }
 }
 export async function logout(req, res) {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+  });
   res.status(200).json({ success: true, message: "Logged out successfully" });
 }
 export async function checkAuth(req, res) {
