@@ -15,12 +15,12 @@ export const BlogProvider = ({ children }) => {
   const [myblogs, setmyBlogs] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user || loading) return;
-    if (!user.isVerified && location.pathname !== "/verify") {
-      navigate("/verify");
-    }
-  }, [user, verified, loading, location.pathname]);
+  // useEffect(() => {
+  //   if (!user || loading) return;
+  //   if (!user.isVerified && location.pathname !== "/verify") {
+  //     navigate("/verify");
+  //   }
+  // }, [user, verified, loading, location.pathname]);
 
   const getBlogs = async (id, count) => {
     setLoading(true);

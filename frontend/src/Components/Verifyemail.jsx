@@ -6,7 +6,7 @@ import Navbar from "./Navbar";
 
 export default function Verifyemail() {
   const [code, setCode] = useState("");
-  const { loading, Verify } = useContext(UserContext);
+  const { loading } = useContext(UserContext);
   return (
     <>
       <Navbar></Navbar>
@@ -37,7 +37,7 @@ export default function Verifyemail() {
 
         <div className="flex flex-col items-center gap-[20px]">
           <div
-            onClick={(e) => Verify(code)}
+            // onClick={(e) => Verify(code)}
             className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[13px] font-semibold cursor-pointer"
           >
             Verify

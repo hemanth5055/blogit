@@ -27,21 +27,19 @@ export const ContextProvider = ({ children }) => {
       if (!name || !email || !password) {
         throw new Error("All fields are required");
       }
-
       const result = await axios.post(`${backend}/auth/signup`, {
         name,
         email,
         password,
       });
 
+      console.log(result);
       if (!result) {
         throw new Error("Backend Error");
       }
 
-      console.log(result);
-
       if (result.data.success) {
-        navigate("/verify");
+        navigate("/");
       } else {
         toast(result.data.message || "Signup failed");
       }
@@ -51,66 +49,71 @@ export const ContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  const Verify = async (code) => {
-    setLoading(true);
-    try {
-      if (!code) {
-        throw new Error("Verification code is required");
-      }
+  // const Verify = async (code) => {
+  //   setLoading(true);
+  //   try {
+  //     if (!code) {
+  //       throw new Error("Verification code is required");
+  //     }
 
-      const result = await axios.post(`${backend}/auth/verify-email`, { code });
-      if (!result) {
-        throw new Error("Backend Error");
-      }
+  //     const result = await axios.post(`${backend}/auth/verify-email`, { code });
+  //     if (!result) {
+  //       throw new Error("Backend Error");
+  //     }
 
-      console.log(result);
+  //     console.log(result);
 
-      if (result.data.success) {
-        setUser(result.data.user);
-        setVerified(true);
-        navigate("/");
-      } else {
-        toast(result.data.message || "Verification failed");
-      }
-    } catch (error) {
-      toast(error.message || "Something went wrong during verification");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (result.data.success) {
+  //       setUser(result.data.user);
+  //       setVerified(true);
+  //       navigate("/");
+  //     } else {
+  //       toast(result.data.message || "Verification failed");
+  //     }
+  //   } catch (error) {
+  //     toast(error.message || "Something went wrong during verification");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const Login = async (email, password) => {
-    setLoading(true);
+    setLoading(true); // show loading spinner
     try {
+      // Validate input
       if (!email || !password) {
-        throw new Error("All fields are required");
+        toast("All fields are required");
+        return;
       }
 
-      const result = await axios.post(`${backend}/auth/login`, {
+      // Send request to backend
+      const { data } = await axios.post(`${backend}/auth/login`, {
         email,
         password,
       });
 
-      if (!result) {
-        throw new Error("Backend Error");
+      if (!data) {
+        throw new Error("No response from backend");
       }
-      console.log(result);
-      if (result.data.success) {
-        setUser(result.data.user);
-        if (result.data.user.isVerified) {
-          navigate("/");
+
+      // Check success
+      if (data.success) {
+        setUser(data.user);
+
+        if (data.user.isVerified) {
           setVerified(true);
-        } else {
-          navigate("/verify");
+          navigate("/");
         }
       } else {
-        toast(result.data.message || "Login failed");
+        toast(data.message || "Login failed");
       }
     } catch (error) {
-      toast(error.message || "Something went wrong during login");
+      console.error(error); // helpful for debugging
+      toast(error.response?.data?.message || error.message || "Login error");
     } finally {
-      setLoading(false);
+      setLoading(false); // always turn off loading
     }
   };
+
   const CheckAuth = async () => {
     setLoading(true);
     try {
@@ -169,7 +172,6 @@ export const ContextProvider = ({ children }) => {
         setLoading,
         ToastContainer,
         Signup,
-        Verify,
         Login,
         Logout,
       }}

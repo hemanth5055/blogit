@@ -14,9 +14,13 @@ export const sendVerificationEmail = async (email, verificationToken) => {
       text: `Your account verification code is ${verificationToken}`,
       category: "Email Verification",
     });
+    console.log(response);
     console.log("Email sent successfully", response);
+    return true;
   } catch (error) {
     console.log("Error sending verification", error.message);
+    console.log(error);
+    return false;
   }
 };
 

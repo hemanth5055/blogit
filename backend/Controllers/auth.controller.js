@@ -16,19 +16,20 @@ export async function signup(req, res) {
         .json({ success: false, message: "User Already Exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    // const verificationToken = Math.floor(
+    //   100000 + Math.random() * 900000
+    // ).toString();
     const user = new User({
       name,
       email,
       password: hashedPassword,
-      verificationToken,
-      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, //24 Hours in ms
     });
     generateTokenAndSetCookie(res, user._id);
-    await sendVerificationEmail(email, verificationToken);
-    await user.save();
+
+    //verificationToken,
+    // verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, //24 Hours in ms
+      // const validEmail = await sendVerificationEmail(email, verificationToken);
+      await user.save();
     return res.status(201).json({
       success: true,
       message: "User created successfully",
@@ -38,44 +39,44 @@ export async function signup(req, res) {
       },
     });
   } catch (error) {
-    return res.status(400).json({ success: false, message: error.message });
+    return res.json({ success: false, message: error.message });
   }
 }
 
-export async function verifyEmail(req, res) {
-  const { code } = req.body;
-  try {
-    if (!code) {
-      throw new Error("Code is required");
-    }
-    const user = await User.findOne({
-      verificationToken: code,
-      verificationTokenExpiresAt: { $gt: Date.now() },
-    });
-    if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid or expired verification code",
-      });
-    }
-    user.isVerified = true;
-    user.verificationToken = undefined;
-    user.verificationTokenExpiresAt = undefined;
-    await user.save();
-    await sendWelcomeEmail(user.email, user.name);
+// export async function verifyEmail(req, res) {
+//   const { code } = req.body;
+//   try {
+//     if (!code) {
+//       throw new Error("Code is required");
+//     }
+//     const user = await User.findOne({
+//       verificationToken: code,
+//       verificationTokenExpiresAt: { $gt: Date.now() },
+//     });
+//     if (!user) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid or expired verification code",
+//       });
+//     }
+//     user.isVerified = true;
+//     user.verificationToken = undefined;
+//     user.verificationTokenExpiresAt = undefined;
+//     await user.save();
+//     await sendWelcomeEmail(user.email, user.name);
 
-    res.status(200).json({
-      success: true,
-      message: "Email verified successfully",
-      user: {
-        ...user._doc,
-        password: undefined,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({ success: false, message: error.message });
-  }
-}
+//     res.status(200).json({
+//       success: true,
+//       message: "Email verified successfully",
+//       user: {
+//         ...user._doc,
+//         password: undefined,
+//       },
+//     });
+//   } catch (error) {
+//     res.status(400).json({ success: false, message: error.message });
+//   }
+// }
 export async function login(req, res) {
   const { email, password } = req.body;
   try {
