@@ -21,13 +21,6 @@ export const BlogProvider = ({ children }) => {
   //     navigate("/verify");
   //   }
   // }, [user, verified, loading, location.pathname]);
-
-   useEffect(() => {
-      console.log("User in dashboard:", user);
-      if (user) {
-        getBlogs(user._id, 20);
-      }
-    }, [user]);
     
   const getBlogs = async (id, count) => {
     setLoading(true);
