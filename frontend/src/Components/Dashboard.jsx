@@ -8,12 +8,12 @@ import { BlogContext } from "../Context/Blogcontext";
 export default function Dashboard() {
   const { loading, user } = useContext(UserContext);
   const { blogs, getBlogs } = useContext(BlogContext);
-  useEffect(() => {
-    console.log("User in dashboard:", user);
-    if (user) {
-      getBlogs(user._id, 20);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   console.log("User in dashboard:", user);
+  //   if (user) {
+  //     getBlogs(user._id, 20);
+  //   }
+  // }, [user]);
   if (loading) {
     return <Loading></Loading>;
   }

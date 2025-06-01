@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 import { useLocation } from "react-router-dom";
 export const UserContext = createContext();
@@ -26,6 +27,12 @@ export const ContextProvider = ({ children }) => {
     try {
       if (!name || !email || !password) {
         throw new Error("All fields are required");
+      }
+      if (!validator.isEmail(email)) {
+        throw new Error("Use a valid email");
+      }
+      if (password.length < 8) {
+        throw new Error("Password should have atleast 8 characters");
       }
       const result = await axios.post(
         `${backend}/auth/signup`,
