@@ -9,7 +9,7 @@ import { UserContext } from "../Context/Usercontext";
 
 export default function Blog() {
   const [content, setContent] = useState(null);
-  const { loading, user, verified } = useContext(UserContext);
+  const { loading } = useContext(UserContext);
   const { getspecificBlog } = useContext(BlogContext);
   const { blogId } = useParams();
 
@@ -21,13 +21,12 @@ export default function Blog() {
     getspecificBlog(blogId, setContent);
   }, []);
 
-  
   if (loading) {
     return <Loading></Loading>;
   }
 
   return (
-    <div className="relative w-full h-full dark:bg-black rounded-2xl flex flex-col gap-[15px] pt-4">
+    <div className="relative w-full h-full dark:bg-black rounded-2xl flex flex-col gap-[15px] p-2">
       <Navbar></Navbar>
       <div className="w-full flex flex-col items-center gap-[10px]">
         <h4 className="font-mont max-sm:font-medium dark:text-white text-[15px] max-sm:text-[15px]">
@@ -37,15 +36,20 @@ export default function Blog() {
           {content ? content.title : "Blog not found"}
         </h1>
         <div className="flex gap-[10px] items-center">
-          <div className="w-[30px] h-[30px] bg-gray-600 rounded-full"></div>
+          <div className="w-[30px] h-[30px]  rounded-full">
+            <img
+              src={content?.createdBy.profileUrl}
+              className="w-full h-full object-cover rounded-full"
+            />
+          </div>
           <h1 className="dark:text-white max-sm:font-medium font-mont text-[15px] max-sm:text-[15px]">
-            {content?.createdName}
+            {content?.createdBy.name}
           </h1>
         </div>
       </div>
 
       <div
-        className="dark:text-gray-100 text-[17px] pt-[20px] w-full px-5 font-mont leading-7 mb-5"
+        className="dark:text-gray-100 text-[19px] pt-[20px] w-full px-5 font-mont leading-7 mb-5"
         dangerouslySetInnerHTML={{ __html: content?.content }}
       />
     </div>

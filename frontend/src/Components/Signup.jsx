@@ -7,11 +7,14 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, Signup } = useContext(UserContext);
+  const [image, setImage] = useState(null);
+  const { loading, Signup, user } = useContext(UserContext);
   const navigate = useNavigate();
-  // if (loading) {
-  //   return <Loading></Loading>;
-  // }
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center dark:bg-black rounded-2xl gap-[40px]">
       {loading ? <Loading></Loading> : ""}
@@ -59,11 +62,23 @@ export default function Signup() {
             className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[350px] max-sm:w-[300px]  rounded-[10px] dark:text-white font-mont pl-2 text-[15px]"
           />
         </div>
+
+        <div className="email box flex flex-col gap-1">
+          <h4 className="font-mont font-medium text-[15px] dark:text-white text-black">
+            Profile Pic
+          </h4>
+          <input
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            type="file"
+            className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[350px] max-sm:w-[300px]  rounded-[10px] dark:text-white font-mont pl-2 text-[15px]"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col items-center gap-[20px]">
         <div
-          onClick={() => Signup(name, email, password)}
+          onClick={() => Signup(name, email, password, navigate)}
           className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[15px] font-semibold cursor-pointer"
         >
           Signup

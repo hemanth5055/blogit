@@ -8,41 +8,37 @@ import { useLocation } from "react-router-dom";
 export const UserContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-  axios.defaults.withCredentials = true;
-  const navigate = useNavigate();
   const backend = import.meta.env.VITE_BACKEND;
+
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const [verified, setVerified] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    if (!user) {
-      CheckAuth();
-    }
-  }, [user]);
-
-  const Signup = async (name, email, password) => {
+  const Signup = async (name, email, password, profileImage, navigate) => {
     setLoading(true);
     try {
-      if (!name || !email || !password) {
+      if (!name || !email || !password || !profileImage) {
         throw new Error("All fields are required");
       }
       if (!validator.isEmail(email)) {
         throw new Error("Use a valid email");
       }
       if (password.length < 8) {
-        throw new Error("Password should have atleast 8 characters");
+        throw new Error("Password should have at least 8 characters");
       }
-      const result = await axios.post(
-        `${backend}/auth/signup`,
-        {
-          name,
-          email,
-          password,
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("profileImage", profileImage); // profileImage should be a File object
+
+      const result = await axios.post(`${backend}/auth/signup`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        { withCredentials: true }
-      );
+      });
 
       console.log(result);
       if (!result) {
@@ -50,6 +46,7 @@ export const ContextProvider = ({ children }) => {
       }
 
       if (result.data.success) {
+        setUser(result.data.user);
         navigate("/");
       } else {
         toast(result.data.message || "Signup failed");
@@ -60,6 +57,7 @@ export const ContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
   // const Verify = async (code) => {
   //   setLoading(true);
   //   try {
@@ -87,7 +85,7 @@ export const ContextProvider = ({ children }) => {
   //     setLoading(false);
   //   }
   // };
-  const Login = async (email, password) => {
+  const Login = async (email, password, navigate) => {
     setLoading(true); // show loading spinner
     try {
       // Validate input
@@ -109,15 +107,11 @@ export const ContextProvider = ({ children }) => {
       if (!data) {
         throw new Error("No response from backend");
       }
-
+      console.log(data);
       // Check success
       if (data.success) {
         setUser(data.user);
-
-        if (data.user.isVerified) {
-          setVerified(true);
-          navigate("/");
-        }
+        navigate("/");
       } else {
         toast(data.message || "Login failed");
       }
@@ -129,7 +123,7 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  const CheckAuth = async () => {
+  const CheckAuth = async (navigate) => {
     setLoading(true);
     try {
       const result = await axios.get(`${backend}/auth/check-auth`, {
@@ -138,26 +132,17 @@ export const ContextProvider = ({ children }) => {
       if (!result) {
         throw new Error("Backend Error");
       }
-      const user = result.data.user;
-      setUser(user);
       if (result.data.success) {
-        if (!user.isVerified && location.pathname !== "/verify") {
-          navigate("/verify");
-        } else if (user.isVerified && location.pathname === "/verify") {
-          setVerified(true);
-          navigate("/");
-        }
-      } else {
-        navigate("/login");
+        setUser(result.data.user);
+        navigate("/");
       }
     } catch (error) {
-      console.log(error.message);
       navigate("/login");
     } finally {
       setLoading(false);
     }
   };
-  const Logout = async () => {
+  const Logout = async (navigate) => {
     setLoading(true);
     try {
       const result = await axios.post(`${backend}/auth/logout`, {
@@ -185,7 +170,6 @@ export const ContextProvider = ({ children }) => {
         loading,
         user,
         toast,
-        verified,
         backend,
         location,
         setLoading,
@@ -193,6 +177,7 @@ export const ContextProvider = ({ children }) => {
         Signup,
         Login,
         Logout,
+        CheckAuth,
       }}
     >
       {children}

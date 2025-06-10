@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const BlogContext = createContext();
 
 export const BlogProvider = ({ children }) => {
-  const { user, loading, toast, backend, setLoading, verified, location } =
-    useContext(UserContext);
+  const { toast, backend, setLoading } = useContext(UserContext);
   const [blogs, setBlogs] = useState(null);
   const [myblogs, setmyBlogs] = useState(null);
   const navigate = useNavigate();
@@ -21,20 +20,15 @@ export const BlogProvider = ({ children }) => {
   //     navigate("/verify");
   //   }
   // }, [user, verified, loading, location.pathname]);
-    
-  const getBlogs = async (id, count) => {
+
+  const getBlogs = async () => {
     setLoading(true);
     try {
-      if (!id || !count) {
-        throw new Error("Missind Id and Count");
-      }
-      const result = await axios.post(
-        `${backend}/blog/all`,
-        { id, count },
-        { withCredentials: true }
-      );
-      setBlogs(result.data.blogs);
+      const result = await axios.get(`${backend}/blog/all`, {
+        withCredentials: true,
+      });
       console.log(result);
+      setBlogs(result.data.blogs);
     } catch (error) {
       toast(error.message);
     } finally {
@@ -42,21 +36,14 @@ export const BlogProvider = ({ children }) => {
     }
   };
 
-  const getmyBlogs = async (id) => {
+  const getmyBlogs = async () => {
     setLoading(true);
     try {
-      if (!id) {
-        throw new Error("Missing Id");
-      }
-      const result = await axios.post(
-        `${backend}/blog/userSpecific`,
-        {
-          id,
-        },
-        { withCredentials: true }
-      );
+      const result = await axios.get(`${backend}/blog/userSpecific`, {
+        withCredentials: true,
+      });
+      console.log(result.data.blogs);
       setmyBlogs(result.data.blogs);
-      console.log(result);
     } catch (error) {
       toast(error.message);
     } finally {
@@ -70,21 +57,15 @@ export const BlogProvider = ({ children }) => {
       if (!id) {
         throw new Error("Missing Id");
       }
-      const result = await axios.post(
-        `${backend}/blog/blogSpecific`,
-        {
-          id,
-        },
-        { withCredentials: true }
-      );
+      const result = await axios.get(`${backend}/blog/blogSpecific/${id}`, {
+        withCredentials: true,
+      });
       console.log(result);
       if (result.data.success) {
         setterFn(result.data.blog);
-        console.log(result.data.blog);
       } else {
         toast("No Blog Found");
         setterFn(null);
-        navigate("/");
       }
     } catch (error) {
       toast("Blog Not Found");
@@ -93,24 +74,10 @@ export const BlogProvider = ({ children }) => {
     }
   };
 
-  const sendBlog = async (
-    title,
-    description,
-    content,
-    createdName,
-    createdId,
-    dateString
-  ) => {
+  const sendBlog = async (title, description, content, dateString) => {
     setLoading(true);
     try {
-      if (
-        !title ||
-        !description ||
-        !content ||
-        !createdId ||
-        !createdName ||
-        !dateString
-      ) {
+      if (!title || !description || !content || !dateString) {
         throw new Error("All fields are required.");
       }
       const result = await axios.post(
@@ -119,8 +86,6 @@ export const BlogProvider = ({ children }) => {
           title,
           description,
           content,
-          createdId,
-          createdName,
           dateString,
         },
         { withCredentials: true }
@@ -137,6 +102,29 @@ export const BlogProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const deleteBlog = async (id) => {
+    setLoading(true);
+    try {
+      if (!id) {
+        throw new Error("Missing Id");
+      }
+      const result = await axios.delete(`${backend}/blog/deleteBlog/${id}`, {
+        withCredentials: true,
+      });
+      if (result.data.success) {
+        toast("Blog deleted successfully!");
+        if (getmyBlogs) {
+          getmyBlogs((prev) => prev.filter((blog) => blog._id !== id));
+        }
+      } else {
+        toast(result.data.message || "Failed to delete blog");
+      }
+    } catch (error) {
+      toast(error.response?.data?.message || "Blog could not be deleted");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <BlogContext.Provider
@@ -145,6 +133,7 @@ export const BlogProvider = ({ children }) => {
         getmyBlogs,
         myblogs,
         getBlogs,
+        deleteBlog,
         getspecificBlog,
         sendBlog,
       }}

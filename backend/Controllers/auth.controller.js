@@ -122,17 +122,6 @@ export async function logout(req, res) {
   res.status(200).json({ success: true, message: "Logged out successfully" });
 }
 export async function checkAuth(req, res) {
-  console.log(req.userId);
-  try {
-    const user = await User.findOne({ _id: req.userId }).select("-password");
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
-    }
-    res.status(200).json({ success: true, user });
-  } catch (error) {
-    console.log("Error in checkAuth ", error);
-    res.status(400).json({ success: false, message: error.message });
-  }
+  const user = req.user;
+  res.status(200).json({ success: true, user });
 }

@@ -25,12 +25,8 @@ export async function add(req, res) {
 
 export async function all(req, res) {
   const user = req.user;
-
   try {
-    if (!count) {
-      throw new Error("All fields are required");
-    }
-    const result = await Blog.find({ createdId: { $ne: user._id } })
+    const result = await Blog.find({ createdBy: { $ne: user } })
       .populate("createdBy", "name profileUrl")
       .sort({ createdAt: 1 });
     return res.status(200).json({ success: true, blogs: result });
@@ -64,6 +60,30 @@ export async function reqBlog(req, res) {
         .json({ success: false, message: "Blog Not Found" });
     }
     return res.status(200).json({ success: true, blog: result });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+}
+
+export async function deleteBlog(req, res) {
+  const blogId = req.params.blogId;
+  const user = req.user;
+  try {
+    const blog = await Blog.findOneAndDelete({
+      _id: blogId,
+      createdBy: user._id,
+    });
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        message: "Blog not found or you are not authorized to delete it.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Blog deleted successfully.",
+    });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
   }

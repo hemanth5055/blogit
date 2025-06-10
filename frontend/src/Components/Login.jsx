@@ -2,12 +2,18 @@ import React, { useContext, useState } from "react";
 import Loading from "./Loading";
 import { UserContext } from "../Context/Usercontext";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { Login, loading } = useContext(UserContext);
+  const { Login, loading, user } = useContext(UserContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="relative w-full h-full flex flex-col justify-center items-center dark:bg-black rounded-2xl gap-[40px]">
@@ -49,7 +55,7 @@ export default function Login() {
 
         <div className="flex flex-col items-center gap-[20px]">
           <div
-            onClick={() => Login(email, password)}
+            onClick={() => Login(email, password, navigate)}
             className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[15px] font-semibold cursor-pointer"
           >
             Login

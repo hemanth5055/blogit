@@ -7,7 +7,7 @@ import { BlogContext } from "../Context/Blogcontext";
 
 export default function Myblogs() {
   const { loading, user } = useContext(UserContext);
-  const { myblogs, getmyBlogs } = useContext(BlogContext);
+  const { myblogs, getmyBlogs,  } = useContext(BlogContext);
   useEffect(() => {
     if (user) {
       getmyBlogs(user._id);
@@ -37,9 +37,11 @@ export default function Myblogs() {
                 title={item.title}
                 blogId={item._id}
                 desc={item.description}
-                createdName={item.createdName}
+                createdName={user.name}
+                profileUrl={user.profileUrl}
                 dateString={item.dateString}
                 key={index}
+                canDelete={true}
               ></Item>
             );
           })}

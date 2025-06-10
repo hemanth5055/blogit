@@ -13,15 +13,15 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const { sendBlog } = useContext(BlogContext);
-  const { user, loading, verified } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const navigate = useNavigate();
   const config = useMemo(
     () => ({
       readonly: false,
       placeholder: "Start typing...",
-      Height: 450,
-      maxHeight: 450,
-      minHeight: 450,
+      Height: 550,
+      maxHeight: 550,
+      minHeight: 550,
       contentStyle: "body { color: black; }", // <-- Sets the text color inside the editor
     }),
     []
@@ -33,16 +33,15 @@ export default function Create() {
   }
   const handlePost = () => {
     const todayDate = getFormattedDate();
-    sendBlog(title, desc, content, user.name, user._id, todayDate);
+    sendBlog(title, desc, content, todayDate);
   };
-
 
   if (loading) {
     return <Loading></Loading>;
   }
 
   return (
-    <div className="w-full h-full p-2 flex flex-col gap-[10px]">
+    <div className="w-full  h-full p-2 flex flex-col gap-[10px]">
       <Navbar></Navbar>
       <div className="w-full flex h-full justify-between px-5 items-center gap-2 flex-wrap ">
         <div className="w-[400px] flex h-full flex-col gap-4 ">

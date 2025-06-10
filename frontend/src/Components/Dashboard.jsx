@@ -9,9 +9,8 @@ export default function Dashboard() {
   const { loading, user } = useContext(UserContext);
   const { blogs, getBlogs } = useContext(BlogContext);
   useEffect(() => {
-    console.log("User in dashboard:", user);
     if (user) {
-      getBlogs(user._id, 20);
+      getBlogs();
     }
   }, [user]);
   if (loading) {
@@ -33,12 +32,19 @@ export default function Dashboard() {
                 title={item.title}
                 blogId={item._id}
                 desc={item.description}
-                createdName={item.createdName}
+                createdName={item.createdBy.name}
                 dateString={item.dateString}
+                profileUrl={item.createdBy.profileUrl}
                 key={index}
+                canDelete={false}
               ></Item>
             );
           })}
+        {blogs?.length == 0 ? (
+          <h1 className="text-red-400 font-mont">*No blogs to view</h1>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
