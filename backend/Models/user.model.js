@@ -22,7 +22,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    profileUrl: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
-export const User = mongoose.model("user", userSchema);
+export const User = mongoose.model("User", userSchema);

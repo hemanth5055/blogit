@@ -1,10 +1,11 @@
 import { User } from "../Models/user.model.js";
 import bcrypt from "bcrypt";
 import { generateTokenAndSetCookie } from "../Utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail, sendWelcomeEmail } from "../Mailtrap/emails.js";
+// import { sendVerificationEmail, sendWelcomeEmail } from "../Mailtrap/emails.js";
 
 export async function signup(req, res) {
   const { name, email, password } = req.body;
+  const image = req.file;
   try {
     if (!name || !email || !password) {
       throw new Error("All fields are required");
@@ -19,10 +20,12 @@ export async function signup(req, res) {
     // const verificationToken = Math.floor(
     //   100000 + Math.random() * 900000
     // ).toString();
+    const profileImageUrl = image?.path || "";
     const user = new User({
       name,
       email,
       password: hashedPassword,
+      profileUrl: profileImageUrl,
     });
     generateTokenAndSetCookie(res, user._id);
 

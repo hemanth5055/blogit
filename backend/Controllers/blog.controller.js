@@ -1,18 +1,11 @@
 import { Blog } from "../Models/blog.model.js";
 
 export async function add(req, res) {
-  const { title, description, content, createdId, createdName, dateString } =
-    req.body;
+  const { title, description, content, dateString } = req.body;
+  const user = req.user;
 
   try {
-    if (
-      !title ||
-      !description ||
-      !content ||
-      !createdId ||
-      !createdName ||
-      !dateString
-    ) {
+    if (!title || !description || !content || !dateString) {
       throw new Error("All fields are required.");
     }
 
@@ -20,13 +13,10 @@ export async function add(req, res) {
       title,
       description,
       content,
-      createdId,
-      createdName,
+      createdBy: user,
       dateString,
     });
-
     const result = await post.save();
-    console.log(result);
     return res.status(200).json({ success: true, blog: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
@@ -34,17 +24,15 @@ export async function add(req, res) {
 }
 
 export async function all(req, res) {
-  const { id, count } = req.body;
+  const user = req.user;
 
   try {
-    if (!id || !count) {
+    if (!count) {
       throw new Error("All fields are required");
     }
-
-    const result = await Blog.find({ createdId: { $ne: id } })
-      .limit(Number(count) || 20)
+    const result = await Blog.find({ createdId: { $ne: user._id } })
+      .populate("createdBy", "name profileUrl")
       .sort({ createdAt: 1 });
-
     return res.status(200).json({ success: true, blogs: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
@@ -52,27 +40,29 @@ export async function all(req, res) {
 }
 
 export async function userBlogs(req, res) {
-  const { id } = req.body;
-
+  const user = req.user;
   try {
-    if (!id) {
-      throw new Error("All fields are required");
-    }
-
-    const result = await Blog.find({ createdId: id }).sort({ createdAt: 1 });
-
+    const result = await Blog.find({ createdBy: user }).sort({
+      createdAt: 1,
+    });
     return res.status(200).json({ success: true, blogs: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
   }
 }
 export async function reqBlog(req, res) {
-  const { id } = req.body;
+  const blogId = req.params.blogId;
+  console.log(blogId);
   try {
-    if (!id) {
-      throw new Error("All fields are required");
+    const result = await Blog.findById(blogId).populate(
+      "createdBy",
+      "name profileUrl"
+    );
+    if (!result) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Blog Not Found" });
     }
-    const result = await Blog.findById(id);
     return res.status(200).json({ success: true, blog: result });
   } catch (error) {
     return res.status(400).json({ success: false, message: error.message });
