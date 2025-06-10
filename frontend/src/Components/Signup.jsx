@@ -68,8 +68,7 @@ export default function Signup() {
             Profile Pic
           </h4>
           <input
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
             type="file"
             className="outline-none dark:bg-[#212121] text-black  bg-[rgb(239,238,238)] h-[40px] w-[350px] max-sm:w-[300px]  rounded-[10px] dark:text-white font-mont pl-2 text-[15px]"
           />
@@ -78,7 +77,7 @@ export default function Signup() {
 
       <div className="flex flex-col items-center gap-[20px]">
         <div
-          onClick={() => Signup(name, email, password, navigate)}
+          onClick={() => Signup(name, email, password, image, navigate)}
           className="bg-[#FDE36D] text-black font-mont py-2 px-[20px] rounded-[10px] text-[15px] font-semibold cursor-pointer"
         >
           Signup

@@ -145,7 +145,7 @@ export const ContextProvider = ({ children }) => {
   const Logout = async (navigate) => {
     setLoading(true);
     try {
-      const result = await axios.post(`${backend}/auth/logout`, {
+      const result = await axios.get(`${backend}/auth/logout`, {
         withCredentials: true,
       });
       if (!result) {

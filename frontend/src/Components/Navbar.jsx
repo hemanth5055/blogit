@@ -66,7 +66,7 @@ export default function Navbar() {
           <div
             className="logout h-[33px] w-[33px] cursor-pointer flex justify-center items-center"
             title="Logout"
-            onClick={Logout}
+            onClick={() => Logout(navigate)}
           >
             <TbLogout2 className="text-black"></TbLogout2>
           </div>

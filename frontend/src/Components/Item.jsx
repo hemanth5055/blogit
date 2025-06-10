@@ -17,7 +17,7 @@ export default function Item({
   const navigate = useNavigate();
   const { deleteBlog } = useContext(BlogContext);
   return (
-    <div className="dark:bg-[#161515] dark:hover:bg-[#6a9bda70] hover:bg-[#a3c1e770] bg-[#f3f3f3] relative flex flex-col p-3 rounded-2xl justify-between gap-[15px] h-[180px] max-sm:h-[210px] max-sm:text-[]">
+    <div className="dark:bg-[#161515] dark:hover:bg-[#6a9bda70] hover:bg-[#a3c1e770] bg-[#f3f3f3] relative flex flex-col p-3 rounded-2xl justify-between gap-[15px] h-[190px] max-sm:h-[200px] max-sm:text-[]">
       <div className="w-full flex justify-between items-center">
         <h2
           className="dark:text-white text-black font-mont font-medium text-[30px] max-sm:text-[23px]"
@@ -61,7 +61,7 @@ export default function Item({
         <div className="flex gap-3">
           <div className="w-[35px] h-[35px] rounded-full dark:bg-[#D9D9D9] bg-[#b5b5b5] ">
             <img
-              src={profileUrl}
+              src={profileUrl!==""?(profileUrl):null}
               className="w-full h-full object-cover rounded-full"
             />
           </div>
