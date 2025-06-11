@@ -82,7 +82,7 @@ export default function Item({
               deleteBlog(blogId);
             }}
           >
-            <FiTrash size={18} className="text-red-300" />
+            <FiTrash size={18} className="text-red-400" />
           </div>
         ) : (
           ""
